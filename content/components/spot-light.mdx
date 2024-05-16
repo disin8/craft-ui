@@ -1,0 +1,134 @@
+---
+title: Spot Light
+description: Add spot light to your card
+---
+
+import {
+  DemoFallback,
+  SpotLightDemo,
+} from './demos'
+
+A card that displays a tweet with the author's name, handle, and profile picture.
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <SpotLightDemo />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  export function App() {
+    return (
+      <SpotLight>
+        <TweetComponent id="1683920951807971329" />
+      </SpotLight>
+    )
+  }
+  ```
+  </Tab>
+</Tabs>
+
+## Prerequisites
+
+This component requires the package framer-motion .
+
+```sh
+npm i framer-motion
+```
+
+## React Tweet
+
+```js title="spot-light.tsx"
+'use client'
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
+import type { CSSProperties, MouseEvent } from 'react'
+
+interface SpotLightProps {
+  className?: string
+  size?: string
+  color?: string
+  transparent?: string
+  children?: React.ReactNode
+  [key: string]: any
+}
+
+export function SpotLight({ children, size = '330px', color = '#7AA2E377', transparent = '60%' }: SpotLightProps) {
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  function handleMouseMove({
+    currentTarget,
+    clientX,
+    clientY,
+  }: MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect()
+
+    mouseX.set(clientX - left)
+    mouseY.set(clientY - top)
+  }
+
+  return (
+    <div
+      className="group relative max-w-md rounded-xl border border-white/10 bg-gray-900 shadow-2xl"
+      onMouseMove={handleMouseMove}
+      style={
+        {
+          '--size': size,
+          '--color': color,
+          '--transparent': transparent,
+        } as CSSProperties
+      }
+    >
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              var(--size) circle at ${mouseX}px ${mouseY}px,
+              var(--color),
+              transparent var(--transparent)
+            )
+          `,
+        }}
+      />
+      {children}
+    </div>
+  )
+}
+```
+
+## Props
+
+size
+color
+transparent
+children
+
+<TypeTable
+  type={{
+    size: {
+      type: 'string',
+      description: 'The size of circle.',
+      default: '330px',
+    },
+    color: {
+      type: 'string',
+      description: 'The color of circle.',
+      default: '#7AA2E377',
+    },
+    transparent: {
+      type: 'string',
+      description: 'The transparency of circle.',
+      default: '60%',
+    },
+    children: {
+      type: 'node',
+      default: '-',
+    },
+  }}
+/>
+
+## Documentation
+
+ - [react-tweet](https://react-tweet.vercel.app/next)

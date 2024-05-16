@@ -1,0 +1,181 @@
+---
+title: Tweet
+description: How to ember tweet to your app
+---
+
+import {
+  DemoFallback,
+  TweetDemo,
+} from './demos'
+
+
+A card that displays a tweet with the author's name, handle, and profile picture.
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <TweetDemo />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  export function TweetCard() {
+    return (
+        <TweetComponent id="1683920951807971329" />
+    )
+  }
+  ```
+  </Tab>
+</Tabs>
+
+## Prerequisites
+
+This component requires the package react-tweet .
+
+```sh
+npm i react-tweet
+```
+
+## React Tweet
+
+```js title="tweet.tsx"
+import { getTweet } from 'react-tweet/api'
+import {
+  EmbeddedTweet,
+  TweetNotFound,
+  type TweetProps,
+} from 'react-tweet'
+import './tweet.css'
+
+async function TweetContent({ id, components, onError }: TweetProps) {
+  let error
+  const tweet = id
+    ? await getTweet(id).catch((err) => {
+      if (onError) {
+        error = onError(err)
+      }
+      else {
+        console.error(err)
+        error = err
+      }
+    })
+    : undefined
+
+  if (!tweet) {
+    const NotFound = components?.TweetNotFound || TweetNotFound
+    return <NotFound error={error} />
+  }
+
+  return <EmbeddedTweet tweet={tweet} components={components} />
+}
+
+const ReactTweet = (props: TweetProps) => <TweetContent {...props} />
+
+export async function TweetComponent({ id }: { id: string }) {
+  return (
+    <div className="tweet my-6">
+      <div className="flex justify-center">
+        <ReactTweet id={id} />
+      </div>
+    </div>
+  )
+}
+```
+
+```css title="tweet.css"
+/* Light theme (default) */
+.tweet .react-tweet-theme {
+  /* margin is handled by our wrappers */
+  --tweet-container-margin: 0;
+  --tweet-font-family: inherit;
+  --tweet-font-color: inherit;
+
+  /* Light colors */
+  --tweet-bg-color: #fff;
+  --tweet-bg-color-hover: var(--tweet-bg-color);
+  --tweet-color-blue-secondary: theme("colors.gray.600");
+  --tweet-color-blue-secondary-hover: theme("colors.gray.100");
+  --tweet-font-color-secondary: theme("colors.gray.500");
+
+  /* Common properties for both themes */
+  --tweet-quoted-bg-color-hover: rgba(0, 0, 0, 0.03);
+  --tweet-border: 1px solid rgb(207, 217, 222);
+  --tweet-skeleton-gradient: linear-gradient(
+    270deg,
+    #fafafa,
+    #eaeaea,
+    #eaeaea,
+    #fafafa
+  );
+  --tweet-color-red-primary: rgb(249, 24, 128);
+  --tweet-color-red-primary-hover: rgba(249, 24, 128, 0.1);
+  --tweet-color-green-primary: rgb(0, 186, 124);
+  --tweet-color-green-primary-hover: rgba(0, 186, 124, 0.1);
+  --tweet-twitter-icon-color: var(--tweet-font-color);
+  --tweet-verified-old-color: rgb(130, 154, 171);
+  --tweet-verified-blue-color: var(--tweet-color-blue-primary);
+
+  --tweet-actions-font-weight: 500;
+  --tweet-replies-font-weight: 500;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  .tweet .react-tweet-theme {
+    /* Dark theme colors */
+    --tweet-bg-color: #222;
+    --tweet-bg-color-hover: var(--tweet-bg-color);
+    --tweet-quoted-bg-color-hover: rgba(255, 255, 255, 0.03);
+    --tweet-border: 1px solid #333;
+    --tweet-color-blue-secondary: theme("colors.white");
+    --tweet-color-blue-secondary-hover: #333;
+    --tweet-font-color-secondary: theme("colors.gray.400");
+  }
+}
+
+/* Common styles for both themes */
+.tweet .react-tweet-theme p {
+  font-size: inherit;
+  line-height: 1.3rem;
+}
+
+.tweet .react-tweet-theme p a {
+  @apply border-b border-gray-300 transition-[border-color] hover:border-gray-600;
+}
+
+/* Dark theme link styles */
+@media (prefers-color-scheme: dark) {
+  .tweet .react-tweet-theme p a {
+    @apply border-gray-500 text-white hover:border-white;
+  }
+}
+
+/* Remove link underline on hover for both themes */
+.tweet .react-tweet-theme p a:hover {
+  text-decoration: none;
+}
+
+.tweet a div {
+  @apply font-medium tracking-tight;
+}
+
+.tweet div[class*="mediaWrapper"] {
+  max-height: 250px;
+}
+```
+
+## Props
+
+<TypeTable
+  type={{
+    id: {
+      type: 'string',
+      description: 'Tweet id.',
+      default: '-',
+    },
+  }}
+/>
+
+## Documentation
+
+ - [react-tweet](https://react-tweet.vercel.app/next)

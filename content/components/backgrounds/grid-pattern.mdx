@@ -1,0 +1,140 @@
+---
+title: Grid Pattern
+description: Grid pattern for background
+---
+
+import {
+  DemoFallback,
+  GridPatternDemo,
+} from '../demos'
+
+
+An animated retro grid background
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <GridPatternDemo />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  export function App() {
+    return (
+      <div className='relative overflow-hidden'>
+        <GridPattern />
+      </div>
+    )
+  }
+  ```
+  </Tab>
+</Tabs>
+
+## Grid Pattern
+
+```js title="grid-pattern.tsx"
+import { useId } from 'react'
+import { cn } from '@/lib/utils'
+
+interface GridPatternProps {
+  width?: any
+  height?: any
+  x?: any
+  y?: any
+  squares?: Array<[x: number, y: number]>
+  strokeDasharray?: any
+  className?: string
+  [key: string]: any
+}
+
+export function GridPattern({
+  width = 40,
+  height = 40,
+  x = -1,
+  y = -1,
+  strokeDasharray = 0,
+  squares,
+  className,
+  ...props
+}: GridPatternProps) {
+  const id = useId()
+
+  return (
+    <svg
+      aria-hidden="true"
+      className={cn(
+        'pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30',
+        className,
+      )}
+      {...props}
+    >
+      <defs>
+        <pattern
+          id={id}
+          width={width}
+          height={height}
+          patternUnits="userSpaceOnUse"
+          x={x}
+          y={y}
+        >
+          <path
+            d={`M.5 ${height}V.5H${width}`}
+            fill="none"
+            strokeDasharray={strokeDasharray}
+          />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${id})`} />
+      {squares && (
+        <svg x={x} y={y} className="overflow-visible">
+          {squares.map(([x, y]) => (
+            <rect
+              strokeWidth="0"
+              key={`${x}-${y}`}
+              width={width - 1}
+              height={height - 1}
+              x={x * width + 1}
+              y={y * height + 1}
+            />
+          ))}
+        </svg>
+      )}
+    </svg>
+  )
+}
+```
+
+## Props
+
+<TypeTable
+  type={{
+    width: {
+      type: 'number',
+      default: '16',
+    },
+    height: {
+      type: 'number',
+      default: '16',
+    },
+    x: {
+      type: 'number',
+      default: '0',
+    },
+    y: {
+      type: 'number',
+      default: '0',
+    },
+    strokeDasharray: {
+      type: 'number',
+      default: '1',
+    },
+    squares: {
+      type: 'Array<[x: number, y: number]>',
+      default: '-',
+    },
+    className: {
+      type: 'string',
+      default: '-',
+    },
+  }}
+/>

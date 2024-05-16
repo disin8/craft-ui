@@ -1,0 +1,38 @@
+---
+title: Introduction
+description: Introduction to components
+---
+
+import { Features } from '@/components/shared/features';
+import { featuresList, buttonsList } from '@/config/components';
+
+Craft landing and marketing pages with ease. 
+
+Craft UI is a collection of components that you can copy and paste into your apps.
+
+## Installation
+
+Install dependencies
+
+```bash
+npm install -D tailwindcss@latest clsx tailwind-merge
+```
+
+Copy and paste the following code into `lib/utils.ts`.
+
+```js
+import clsx, { ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+## Features
+
+<Features list={featuresList} />
+
+## Buttons
+
+<Features list={buttonsList} />

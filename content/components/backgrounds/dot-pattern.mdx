@@ -1,0 +1,136 @@
+---
+title: Dot Pattern
+description: Dot pattern for background
+---
+
+import {
+  DemoFallback,
+  DotPatternDemo,
+} from '../demos'
+
+
+An animated retro grid background
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <DotPatternDemo />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  export function App() {
+    return (
+      <div className='relative overflow-hidden'>
+        <DotPattern />
+      </div>
+    )
+  }
+  ```
+  </Tab>
+</Tabs>
+
+## Prerequisites
+
+This component requires the package clsx .
+
+```sh
+npm i clsx
+```
+
+## Dot Pattern
+
+```js title="dot-pattern.tsx"
+import { useId } from 'react'
+import { cn } from '@/lib/utils'
+
+interface DotPatternProps {
+  width?: any
+  height?: any
+  x?: any
+  y?: any
+  cx?: any
+  cy?: any
+  cr?: any
+  className?: string
+  [key: string]: any
+}
+export function DotPattern({
+  width = 16,
+  height = 16,
+  x = 0,
+  y = 0,
+  cx = 1,
+  cy = 1,
+  cr = 1,
+  className,
+  ...props
+}: DotPatternProps) {
+  const id = useId()
+
+  return (
+    <svg
+      aria-hidden="true"
+      className={cn(
+        'pointer-events-none absolute inset-0 h-full w-full fill-gray-400/40',
+        className,
+      )}
+      {...props}
+    >
+      <defs>
+        <pattern
+          id={id}
+          width={width}
+          height={height}
+          patternUnits="userSpaceOnUse"
+          patternContentUnits="userSpaceOnUse"
+          x={x}
+          y={y}
+        >
+          <circle id="pattern-circle" cx={cx} cy={cy} r={cr} />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${id})`} />
+    </svg>
+  )
+}
+```
+
+## Props
+
+<TypeTable
+  type={{
+    width: {
+      type: 'number',
+      default: '16',
+    },
+    height: {
+      type: 'number',
+      default: '16',
+    },
+    x: {
+      type: 'number',
+      default: '0',
+    },
+    y: {
+      type: 'number',
+      default: '0',
+    },
+    cx: {
+      type: 'number',
+      default: '1',
+    },
+    cy: {
+      type: 'number',
+      default: '1',
+    },
+    cr: {
+      type: 'number',
+      default: '1',
+    },
+    className: {
+      type: 'string',
+      default: '-',
+    },
+  }}
+/>

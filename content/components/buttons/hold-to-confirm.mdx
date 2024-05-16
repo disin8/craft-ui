@@ -1,0 +1,221 @@
+---
+title: Hold to confirm
+description: Hold to confirm
+---
+
+import {
+  DemoFallback,
+  HoldToConfirmDemo,
+  HoldToConfirmDemo2,
+} from '../demos'
+
+
+A button with hold to confirm effect
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <HoldToConfirmDemo />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  export function Page() {
+    return (
+      <div className='relative overflow-hidden'>
+        <HoldToConfirm text="Hold" />
+      </div>
+    )
+  }
+  ```
+  </Tab>
+</Tabs>
+
+## Prerequisites
+
+This component requires the package framer-motion .
+
+```sh
+npm i framer-motion
+```
+
+## Hold to confirm button
+
+```js title="hold-to-confirm.tsx"
+'use client'
+
+import type { PointerEvent } from 'react'
+import { useRef, useState } from 'react'
+import type {
+  Variants,
+} from 'framer-motion'
+import {
+  AnimatePresence,
+  animate,
+  motion,
+  useMotionValue,
+  useTransform,
+} from 'framer-motion'
+import { cn } from '@/lib/utils'
+
+type Direction = 'back' | 'forward'
+
+const textVariants: Variants = {
+  initial: (direction: Direction) => ({
+    y: direction === 'forward' ? '-30%' : '30%',
+    opacity: 0,
+  }),
+  target: {
+    y: '0%',
+    opacity: 1,
+  },
+  exit: (direction: Direction) => ({
+    y: direction === 'forward' ? '30%' : '-30%',
+    opacity: 0,
+  }),
+}
+
+interface HoldToConfirmProps {
+  text: string
+  confirmTimeout?: number
+  className?: string
+  onConfirm?: VoidFunction
+}
+
+export function HoldToConfirm({
+  text: textFromProps,
+  confirmTimeout = 2,
+  className,
+  onConfirm,
+}: HoldToConfirmProps) {
+  const [state, setState] = useState<'idle' | 'inProgress' | 'complete'>(
+    'idle',
+  )
+  const ref = useRef<HTMLButtonElement>(null)
+
+  const progress = useMotionValue(0)
+  const fillRightOffset = useTransform(progress, v => `${(1 - v) * 100}%`)
+
+  const fillerConfirmAnimationProgress = useMotionValue(0)
+  const fillLeftOffset = useTransform(
+    fillerConfirmAnimationProgress,
+    v => `${v * 100}%`,
+  )
+
+  const text
+    = state === 'idle'
+      ? textFromProps
+      : state === 'inProgress'
+        ? 'Hold to confirm'
+        : 'Release to confirm'
+
+  const textDirection: Direction = state === 'idle' ? 'back' : 'forward'
+
+  const startCountdown = () => {
+    setState('inProgress')
+    animate(progress, 1, { duration: confirmTimeout, ease: 'linear' }).then(
+      () => {
+        if (progress.get() !== 1)
+          return
+        setState('complete')
+      },
+    )
+  }
+
+  const cancelCountdown = () => {
+    progress.stop()
+    setState('idle')
+    animate(progress, 0, { duration: 0.2, ease: 'linear' })
+  }
+
+  const pointerUp = (e: PointerEvent) => {
+    const target = document.elementFromPoint(e.clientX, e.clientY)
+    if (progress.get() === 1 && ref.current?.contains(target)) {
+      animate(fillerConfirmAnimationProgress, 1, {
+        duration: 0.2,
+        ease: 'linear',
+      }).then(() => {
+        fillerConfirmAnimationProgress.jump(0)
+        progress.jump(0)
+        setState('idle')
+        onConfirm?.()
+      })
+    }
+    else {
+      cancelCountdown()
+    }
+  }
+
+  const pointerMove = (e: PointerEvent) => {
+    if (e.pointerType === 'mouse')
+      return
+    const target = document.elementFromPoint(e.clientX, e.clientY)
+    if (!ref.current?.contains(target))
+      cancelCountdown()
+  }
+
+  return (
+    <motion.button
+      className={cn('relative overflow-hidden box-border select-none touch-none bg-[#EF4444] rounded-md px-4 py-2 transition-all whitespace-nowrap min-w-44', className)}
+      ref={ref}
+      onPointerDown={startCountdown}
+      onPointerUp={pointerUp}
+      onPointerCancel={cancelCountdown}
+      onPointerLeave={(e) => {
+        if (e.pointerType === 'mouse')
+          cancelCountdown()
+      }}
+      onPointerMove={pointerMove}
+      onContextMenuCapture={e => e.preventDefault()}
+    >
+      <motion.div
+        className="bg-[#ffffff44] left-0 right-full bottom-0 top-0 absolute pointer-events-none"
+        style={{
+          left: fillLeftOffset,
+          right: fillRightOffset,
+        }}
+      />
+      <AnimatePresence custom={textDirection} initial={false} mode="popLayout">
+        <motion.div
+          key={text}
+          className="pointer-events-none select-none"
+          variants={textVariants}
+          custom={textDirection}
+          initial="initial"
+          animate="target"
+          exit="exit"
+        >
+          {text}
+        </motion.div>
+      </AnimatePresence>
+    </motion.button>
+  )
+}
+```
+
+## Examples
+ 
+With Radix button
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <HoldToConfirmDemo2 />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  import { Button } from '@/components/ui/button'
+
+  export function Page() {
+    return (
+      <div className='relative overflow-hidden'>
+        <Button asChild className="w-56" variant="destructive" size="lg">
+          <HoldToConfirm text="Hold" />
+        </Button>
+      </div>
+    )
+  }
+  ```
+  </Tab>
+</Tabs>

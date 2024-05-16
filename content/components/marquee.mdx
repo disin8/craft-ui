@@ -1,0 +1,148 @@
+---
+title: Marquee
+description: How to use Marquee carousel
+---
+
+import {
+  DemoFallback,
+  MarqueeDemo,
+  MarqueeVerticalDemo
+} from './demos'
+
+An infinite scrolling component that can be used to display text, images, or videos.
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <MarqueeDemo />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  export function TweetsContainers({ tweets }: { tweets: string[] }) {
+    return (
+      <div className='relative overflow-hidden'>
+        <Marquee pauseOnHover className="[--duration:20s]">
+          {tweets.map(id => (
+            <TweetComponent id={id} />
+          ))}
+        </Marquee>
+      </div>
+    )
+  }
+  ```
+  </Tab>
+</Tabs>
+
+## Marquee
+
+```js title="marquee.tsx"
+import { cn } from '@/lib/utils';
+
+interface MarqueeProps {
+  className?: string;
+  reverse?: boolean;
+  pauseOnHover?: boolean;
+  children?: React.ReactNode;
+  vertical?: boolean;
+  repeat?: number;
+  [key: string]: any;
+}
+
+export default function Marquee({
+  className,
+  reverse,
+  pauseOnHover = false,
+  children,
+  vertical = false,
+  repeat = 4,
+  ...props
+}: MarqueeProps) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        'group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]',
+        {
+          'flex-row': !vertical,
+          'flex-col': vertical,
+        },
+        className
+      )}
+    >
+      {Array(repeat)
+        .fill(0)
+        .map((_, i) => (
+          <div
+            key={i}
+            className={cn('flex shrink-0 justify-around [gap:var(--gap)]', {
+              'animate-marquee flex-row': !vertical,
+              'animate-marquee-vertical flex-col': vertical,
+              'group-hover:[animation-play-state:paused]': pauseOnHover,
+              '[animation-direction:reverse]': reverse,
+            })}
+          >
+            {children}
+          </div>
+        ))}
+    </div>
+  );
+}
+```
+
+## Vertically align marquee
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <MarqueeVerticalDemo />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  export function TweetsContainers({ tweets }: { tweets: string[] }) {
+    return (
+      <div className='relative overflow-hidden'>
+        <Marquee vertical pauseOnHover className="[--duration:20s]">
+          {tweets.map(id => (
+            <TweetComponent id={id} />
+          ))}
+        </Marquee>
+      </div>
+    )
+  }
+  ```
+  </Tab>
+</Tabs>
+
+## Props
+
+<TypeTable
+  type={{
+    reverse: {
+      type: 'boolean',
+      description: 'Whether to reverse the direction of the marquee.',
+      default: 'false',
+    },
+    pauseOnHover: {
+      type: 'boolean',
+      description: 'Whether to pause the marquee when the user hovers over the component.',
+      default: 'false',
+    },
+    children: {
+      type: 'node',
+      description: 'The content to display in the marquee.',
+      default: '-',
+    },
+    vertical: {
+      type: 'boolean',
+      description: 'Vertically align of marquee',
+      default: 'false',
+    },
+    repeat: {
+      type: 'number',
+      description: 'The number of times to repeat the content.',
+      default: '1',
+    },
+  }}
+/>

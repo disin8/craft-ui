@@ -1,0 +1,123 @@
+---
+title: Background Blobs
+description: Background Blobs
+---
+
+import {
+  DemoFallback,
+  BlobBackgroundDemo,
+} from '../demos'
+
+
+An animated blobs on your background.
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <BlobBackgroundDemo />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  export function Page() {
+    return (
+      <div className='relative overflow-hidden'>
+        <BackgroundBlobs />
+        <div className="w-96 h-36 rounded-lg divide-y divide-gray-200 dark:divide-gray-800 ring-gray-200 dark:ring-gray-800 ring-0 shadow backdrop-blur-xl bg-white/60 dark:bg-gray-900/60 backdrop-saturate-200">
+          <div className="h-full flex items-center justify-center">
+            <p className="text-gray-500 dark:text-gray-400 mt-1">
+              Backgorund Blobs
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  ```
+  </Tab>
+</Tabs>
+
+## Prerequisites
+
+This component requires the package clsx .
+
+```sh
+npm i clsx
+```
+
+## Blobs
+
+```js title="background-blobs.tsx"
+'use client'
+import { useEffect, useState } from 'react'
+
+function generateInitialPoints() {
+  return Array.from({ length: 16 }).fill(0).map(() => [Math.random(), Math.random()])
+}
+
+export function BackgroundBlobs({ color = 'red', delay = 2000 }: { color?: string, delay?: number }) {
+  const [points, setPoints] = useState(() =>
+    generateInitialPoints(),
+  )
+  const poly = points.map(([x, y]) => `${x * 100}% ${y * 100}%`).join(', ')
+
+  const jumpVal = (val: number) => {
+    const random = Math.random()
+    return random > 0.5
+      ? val + (random - 0.5) / 2
+      : random
+  }
+
+  const jumpPoints = () => {
+    setPoints(prevPoints => prevPoints.map(([x, y]) => [jumpVal(x), jumpVal(y)]))
+  }
+
+  useEffect(() => {
+    const intervalId = setInterval(jumpPoints, Math.random() * 1000 + delay)
+    return () => clearInterval(intervalId)
+  }, [])
+
+  return (
+    <div
+      style={
+      {
+        '--color': color,
+      } as React.CSSProperties
+    }
+      className="blobsbg absolute inset-0 transform-gpu blur-3xl overflow-hidden pointer-events-none"
+      aria-hidden="true"
+    >
+      <div
+        className="aspect-[1.7] w-full h-full bg-gradient-to-r from-[var(--color)] to-white/10 lg:opacity-50"
+        style={{ clipPath: `polygon(${poly})` }}
+      />
+    </div>
+  )
+}
+```
+
+```css title="global.css"
+.blobsbg > div {
+  clip-path: circle(75%);
+  transition: clip-path 3s;
+}
+```
+
+## Props
+
+<TypeTable
+  type={{
+    color: {
+      type: 'string',
+      default: 'red',
+    },
+    delay: {
+      type: 'number',
+      default: 2000,
+    },
+  }}
+/>
+
+## References
+
+Credit to [UnJs](https://github.com/unjs/undocs/blob/main/app/components/LandingBackground.vue) for the inspiration behind this component.
