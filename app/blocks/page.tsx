@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { BlocksIcon } from "lucide-react";
-import Link from "next/link";
+import { BlocksIcon } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export default function BlocksPage() {
   return (
@@ -10,8 +10,9 @@ export default function BlocksPage() {
         <h1 className="text-3xl font-semibold">
           Coming soon
         </h1>
-        <Button asChild variant={'default'}>
-          <Link href={'/'} className="text-3xl font-semibold">
+        <p className="text-base text-neutral-500">In progress...</p>
+        <Button asChild variant="default">
+          <Link href="/" className="text-3xl font-semibold">
             Go Home
           </Link>
         </Button>

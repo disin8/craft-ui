@@ -1,6 +1,5 @@
 import { AnimatedTabs } from '@/components/animated-tabs'
 import { BackgroundBlobs } from '@/components/background-blobs'
-import { BorderBeam } from '@/components/border-beam'
 import CardStack from '@/components/card-stack'
 import { DotPattern } from '@/components/dot-pattern'
 import { FancyGlowingButton } from '@/components/fancy-glowing-button'
@@ -9,8 +8,6 @@ import { GridPattern } from '@/components/grid-pattern'
 import { HoldToConfirm } from '@/components/hold-to-confirm'
 import Marquee from '@/components/marquee'
 import { PitchCarusel } from '@/components/pitch'
-import RetroGrid from '@/components/retro-grid'
-import BorderLightButton from '@/components/border-light-button'
 import { SpotLight } from '@/components/spot-light'
 import { TextReveal } from '@/components/text-opacity-onscroll'
 import { TweetComponent } from '@/components/tweet'
@@ -69,48 +66,10 @@ export function FancyGlowingButtonDemo() {
   )
 }
 
-export function BorderBeamDemo() {
-  return (
-    <DemoContainer>
-      <div className="w-96 h-36 rounded-lg relative bg-white/60 dark:bg-gray-900/60">
-        <div className="h-full flex items-center justify-center">
-          <p className="text-gray-500 dark:text-gray-400 mt-1">Border Beam</p>
-        </div>
-        <BorderBeam size={200} />
-      </div>
-    </DemoContainer>
-  )
-}
-
 export function GlobeDemo() {
   return (
     <DemoContainer>
       <Globe />
-    </DemoContainer>
-  )
-}
-
-export function RetroGridDemo() {
-  return (
-    <DemoContainer>
-      <div className="w-96 h-36 rounded-lg divide-y divide-gray-200 dark:divide-gray-800 ring-gray-200 dark:ring-gray-800 ring-0 shadow backdrop-blur-xl bg-white dark:bg-gray-900 backdrop-saturate-200">
-        <div className="h-full flex items-center justify-center">
-          <p className="text-gray-500 dark:text-gray-400 mt-1">Retro Grid</p>
-        </div>
-      </div>
-      <RetroGrid />
-    </DemoContainer>
-  )
-}
-
-export function BorderLightButtonDemo() {
-  return (
-    <DemoContainer>
-      <BorderLightButton className="shadow-2xl">
-        <span className="whitespace-pre-wrap text-center text-sm font-normal leading-none tracking-tight text-white dark:from-white dark:to-black lg:text-lg">
-          Border Light
-        </span>
-      </BorderLightButton>
     </DemoContainer>
   )
 }
@@ -129,7 +88,7 @@ export function CardStackDemo() {
 }
 
 export function MarqueeDemo() {
-  const tweets = ['20', '1770162462647845038', '1683920951807971329']
+  const tweets = ['20', '234', '1683920951807971329']
   return (
     <DemoContainer>
       <Marquee className="[--duration:20s]">

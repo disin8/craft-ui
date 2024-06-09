@@ -21,15 +21,15 @@ export function TextReveal({ paragraph, byChars, className }: { paragraph: strin
   return (
     <p
       ref={container}
-      className={cn('relative text-6xl p-10 flex text-white flex-wrap', className)}
+      className={cn('relative text-6xl p-10 flex text-black dark:text-white flex-wrap', className)}
     >
       {
-      words.map((word, i) => {
-        const start = i / words.length
-        const end = start + (1 / words.length)
-        return <Word key={i} progress={scrollYProgress} range={[start, end]} byChars={byChars}>{word}</Word>
-      })
-    }
+        words.map((word, i) => {
+          const start = i / words.length
+          const end = start + (1 / words.length)
+          return <Word key={i} progress={scrollYProgress} range={[start, end]} byChars={byChars}>{word}</Word>
+        })
+      }
     </p>
   )
 }

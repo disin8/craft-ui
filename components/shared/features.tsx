@@ -16,14 +16,14 @@ function FeatureCard({ video, name, description, href }: IFeatureListItem) {
   return (
     <Link
       href={href}
-      className="overflow-hidden relative rounded-[--radius] bg-primary/30 dark:bg-primary/10 p-2 [--radius:theme(borderRadius.2xl)]"
+      className="overflow-hidden relative rounded-[--radius] bg-neutral-300 dark:bg-primary/10 p-2 [--radius:theme(borderRadius.2xl)]"
     >
       <div className="relative overflow-hidden rounded-xl">
         <Video src={video} />
       </div>
       <div className="relative px-4 pb-2 pt-4">
         <h3 className="text-lg font-medium">{name}</h3>
-        <p className="mt-2 text-zinc-500">{description}</p>
+        <p className="mt-2 text-netural-500">{description}</p>
       </div>
     </Link>
   )
