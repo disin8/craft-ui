@@ -49,6 +49,7 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+
   }
 }
 
@@ -56,20 +57,20 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
-.blobsbg > div {
+.blobsbg>div {
   clip-path: circle(75%);
   transition: clip-path 3s;
 }
 
 .gradient-text {
   --bg-size: 500%;
-  background: linear-gradient(90deg, #efa0a5, #a788ec, #efa0a5) 0 0 /
-    var(--bg-size) 100%;
+  background: linear-gradient(90deg, #efa0a5, #a788ec, #efa0a5) 0 0 / var(--bg-size) 100%;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -80,6 +81,7 @@
   .gradient-text {
     animation: move-bg 16s linear infinite;
   }
+
   @keyframes move-bg {
     to {
       background-position: var(--bg-size) 0;

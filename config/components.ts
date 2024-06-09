@@ -35,22 +35,10 @@ export const featuresList: IFeatureList = [
     href: 'components/background-blobs',
   },
   {
-    video: `${origin}/videos/border-beam.mp4`,
-    name: 'Border Beam',
-    description: 'An animated beam of light which travels along the border of its container',
-    href: 'components/border-beam',
-  },
-  {
     video: `${origin}/videos/card-stack.mp4`,
     name: 'Card Stack',
     description: 'Multiple card stack with interacitvity',
     href: 'components/card-stack',
-  },
-  {
-    video: `${origin}/videos/energy-ray.mp4`,
-    name: 'Energy Ray',
-    description: 'An ray of anergt traveling along the path',
-    href: 'components/energy-ray',
   },
   {
     video: `${origin}/videos/marquee.mp4`,
@@ -63,12 +51,6 @@ export const featuresList: IFeatureList = [
     name: 'Pitch',
     description: 'Pitch your product',
     href: 'components/pitch',
-  },
-  {
-    video: `${origin}/videos/retro-grid.mp4`,
-    name: 'Retro Grid',
-    description: 'An animated retro grid background',
-    href: 'components/retro-grid',
   },
   {
     video: `${origin}/videos/spot-light.mp4`,
@@ -84,12 +66,6 @@ export const buttonsList: IFeatureList = [
     name: 'Fancy Glow Button',
     description: 'Fancy glow effect with hover.',
     href: 'components/buttons/fancy-glow',
-  },
-  {
-    name: 'Border Light',
-    video: `${origin}/videos/border-light-button.mp4`,
-    description: 'Border Light effect.',
-    href: 'components/buttons/shimmer-button',
   },
   {
     video: `${origin}/videos/hold-to-confirm.mp4`,

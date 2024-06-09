@@ -12,12 +12,12 @@ export function Hero() {
       <div>
         <Badge variant="outline" className="backdrop-blur-[2px]">
           <Link
-            href="https://github.com/xecei/saas-ui/stargazers"
+            href="/components"
             target="_blank"
             rel="noreferrer"
             className="flex items-center"
           >
-            components for everyone
+            beatiful components
             <ChevronRight className="ml-1 h-3 w-3" />
           </Link>
         </Badge>
@@ -25,31 +25,30 @@ export function Hero() {
       <div className="flex flex-col gap-6">
         <h1
           className={cn(
-            'text-foreground font-cal text-4xl md:text-6xl md:leading-tight',
+            'text-foreground font-cal text-2xl md:text-4xl md:leading-tight mt-8',
           )}
         >
-          A better way to
+          Elevate your React projects with
           {' '}
-          <span className="block gradient-text">Shine design</span>
+          <span className="block text-7xl font-bold gradient-text leading-normal">Craft UI</span>
         </h1>
         <p className="text-muted-foreground mx-auto max-w-md text-lg md:max-w-xl md:text-xl ">
-          Shine UI is a collection of interactive Tailwind CSS components built
-          for React.
+          A comprehensive component library that seamlessly integrates Tailwind CSS and Framer Motion.
         </p>
       </div>
       <div className="my-4 grid gap-2 sm:grid-cols-2">
         <div className="text-center sm:block sm:text-right">
-          <Button className="w-48 rounded-full sm:w-auto" asChild>
+          <Button className="w-48 rounded-3xl sm:w-auto" asChild>
             <Link href="/components">Explore Components</Link>
           </Button>
         </div>
         <div className="text-center sm:block sm:text-left">
           <Button
             variant="outline"
-            className="w-48 rounded-full sm:w-auto"
+            className="w-48 rounded-3xl sm:w-auto"
             asChild
           >
-            <Link href="https://github.com/xecei/craft-ui" target="_blank">
+            <Link href="https://github.com/disin8/craft-ui" target="_blank">
               Star on GitHub
               {' '}
               <Suspense fallback={<StarsBadgeFallback />}>

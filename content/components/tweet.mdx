@@ -8,8 +8,7 @@ import {
   TweetDemo,
 } from './demos'
 
-
-A card that displays a tweet with the author's name, handle, and profile picture.
+Display tweets with ease
 
 <Tabs items={['Preview', 'Code']}>
   <Tab value="Preview">
@@ -90,23 +89,12 @@ export async function TweetComponent({ id }: { id: string }) {
   --tweet-font-family: inherit;
   --tweet-font-color: inherit;
 
-  /* Light colors */
-  --tweet-bg-color: #fff;
-  --tweet-bg-color-hover: var(--tweet-bg-color);
-  --tweet-color-blue-secondary: theme("colors.gray.600");
-  --tweet-color-blue-secondary-hover: theme("colors.gray.100");
-  --tweet-font-color-secondary: theme("colors.gray.500");
-
   /* Common properties for both themes */
-  --tweet-quoted-bg-color-hover: rgba(0, 0, 0, 0.03);
-  --tweet-border: 1px solid rgb(207, 217, 222);
-  --tweet-skeleton-gradient: linear-gradient(
-    270deg,
-    #fafafa,
-    #eaeaea,
-    #eaeaea,
-    #fafafa
-  );
+  --tweet-skeleton-gradient: linear-gradient(270deg,
+      #fafafa,
+      #eaeaea,
+      #eaeaea,
+      #fafafa);
   --tweet-color-red-primary: rgb(249, 24, 128);
   --tweet-color-red-primary-hover: rgba(249, 24, 128, 0.1);
   --tweet-color-green-primary: rgb(0, 186, 124);
@@ -119,9 +107,32 @@ export async function TweetComponent({ id }: { id: string }) {
   --tweet-replies-font-weight: 500;
 }
 
+:is([data-theme='light'], .light) .react-tweet-theme,
+.react-tweet-theme {
+  /* Light colors */
+  --tweet-bg-color: #fff;
+  --tweet-bg-color-hover: var(--tweet-bg-color);
+  --tweet-color-blue-secondary: theme("colors.gray.600");
+  --tweet-color-blue-secondary-hover: theme("colors.gray.100");
+  --tweet-font-color-secondary: theme("colors.gray.500");
+  --tweet-quoted-bg-color-hover: rgba(0, 0, 0, 0.03);
+  --tweet-border: 1px solid rgb(207, 217, 222);
+}
+
+:is([data-theme='dark'], .dark) .react-tweet-theme {
+  /* Dark theme colors */
+  --tweet-bg-color: #222;
+  --tweet-bg-color-hover: var(--tweet-bg-color);
+  --tweet-quoted-bg-color-hover: rgba(255, 255, 255, 0.03);
+  --tweet-border: 1px solid #333;
+  --tweet-color-blue-secondary: theme("colors.white");
+  --tweet-color-blue-secondary-hover: #333;
+  --tweet-font-color-secondary: theme("colors.gray.400");
+}
+
 /* Dark theme */
 @media (prefers-color-scheme: dark) {
-  .tweet .react-tweet-theme {
+  :where(.tweet .react-tweet-theme) {
     /* Dark theme colors */
     --tweet-bg-color: #222;
     --tweet-bg-color-hover: var(--tweet-bg-color);
@@ -145,7 +156,7 @@ export async function TweetComponent({ id }: { id: string }) {
 
 /* Dark theme link styles */
 @media (prefers-color-scheme: dark) {
-  .tweet .react-tweet-theme p a {
+  :where(.tweet .react-tweet-theme p a) {
     @apply border-gray-500 text-white hover:border-white;
   }
 }

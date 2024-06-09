@@ -19,7 +19,7 @@ export function AnimatedTabs() {
         <button
           key={tab.id}
           onClick={() => setActiveTab(tab.id)}
-          className="relative rounded-md px-3 py-1.5 text-sm font-medium text-white outline-sky-400 transition focus-visible:outline-2"
+          className="relative rounded-md px-3 py-1.5 text-sm font-medium text-black dark:text-white transition focus-visible:outline-2"
           style={{
             WebkitTapHighlightColor: 'transparent',
           }}
@@ -27,17 +27,17 @@ export function AnimatedTabs() {
           onMouseEnter={() => setFocused(tab.id)}
         >
           {focused === tab.id
-            && (
-              <motion.span
-                transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                className="absolute inset-0 top-0 left-0 w-full h-full bg-[#232323] -z-10 rounded-md"
-                layoutId="highlight"
-              />
-            )}
+          && (
+            <motion.span
+              transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+              className="absolute inset-0 top-0 left-0 w-full h-full bg-[#cacaca] dark:bg-[#232323] -z-10 rounded-md"
+              layoutId="highlight"
+            />
+          )}
           {activeTab === tab.id && (
             <motion.span
               layoutId="active"
-              className="absolute inset-0 z-10 h-1 left-0 top-8 bg-white rounded-md"
+              className="absolute inset-0 z-10 h-1 left-0 top-8 bg-black dark:bg-white rounded-md"
               transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
             />
           )}
