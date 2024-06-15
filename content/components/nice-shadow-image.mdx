@@ -1,0 +1,44 @@
+---
+title: Soft shadow
+description: How to add soft shadow to any container
+---
+
+import {
+  DemoFallback,
+  SoftShadowImage,
+} from './demos'
+
+Soft shadow for container
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <SoftShadowImage />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  export function Page() {
+    return (
+        <SoftShadowImage />
+    )
+  }
+  ```
+  </Tab>
+</Tabs>
+
+## Soft Shadow
+
+```js title="nice-shadow.tsx"
+<div className="h-full space-y-8 translate-y-12">
+  <Image
+    alt="Device"
+    src={'/images/shadow.jpg'}
+    width={200}
+    height={300}
+    unoptimized
+    className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)]
+      dark:shadow-[0_5px_15px_rgba(255,255,255,0.18),0_15px_35px_-5px_rgba(230,227,223,0.2)] ring-1 ring-gray-950/5"
+  />
+</div>
+```

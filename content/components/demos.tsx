@@ -13,6 +13,7 @@ import { TextReveal } from '@/components/text-opacity-onscroll'
 import { TweetComponent } from '@/components/tweet'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 export function DemoFallback() {
   return (
@@ -187,6 +188,68 @@ export function TextOpacityOnScrollDemo() {
       Scroll
       <div className="pt-[600px] pb-8 text-sm">
         <TextReveal className="text-4xl" byChars paragraph='Not to knock them, on the contrary, they have their use cases and cool. Some are even "marketed" as such and are still very handy for simple caching system.' />
+      </div>
+    </DemoContainer>
+  )
+}
+
+export function SoftShadowImage() {
+  return (
+    <DemoContainer className='h-[400px]'>
+      <div className="h-full space-y-8 translate-y-12">
+        <Image
+          alt="Device"
+          src={'/images/shadow.jpg'}
+          width={200}
+          height={300}
+          unoptimized
+          className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)]
+           dark:shadow-[0_5px_15px_rgba(255,255,255,0.18),0_15px_35px_-5px_rgba(230,227,223,0.2)] ring-1 ring-gray-950/5"
+        />
+      </div>
+    </DemoContainer>
+  )
+}
+
+export function SoftOpacity() {
+  return (
+    <DemoContainer className='h-full'>
+      <div className="bg-[#FAFAFA] relative rounded-lg overflow-hidden">
+        <div className="w-full mx-auto flex flex-col row-span-3">
+          <div className="flex gap-8 w-full h-auto scale-[1.03]">
+            <div className="space-y-8 -translate-y-2">
+              <Image
+                alt="Device"
+                src={'/images/chair1.jpg'}
+                width={200}
+                height={300}
+                unoptimized
+                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+              />
+            </div>
+            <div className="space-y-8 -translate-y-5">
+              <Image
+                alt="Device"
+                src={'/images/shadow.jpg'}
+                width={200}
+                height={300}
+                unoptimized
+                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+              />
+            </div>
+            <div className="space-y-8 -translate-y-6">
+              <Image
+                alt="Device"
+                src={'/images/chair2.jpg'}
+                width={200}
+                height={300}
+                unoptimized
+                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="absolute left-0 right-0 bottom-0 h-[16.75rem] bg-gradient-to-t from-white" />
       </div>
     </DemoContainer>
   )

@@ -1,0 +1,72 @@
+---
+title: Soft opacity
+description: How to add soft opacity to any container
+---
+
+import {
+  DemoFallback,
+  SoftOpacity,
+} from './demos'
+
+Soft opacity for container
+
+<Tabs items={['Preview', 'Code']}>
+  <Tab value="Preview">
+  <Suspense fallback={<DemoFallback/>}>
+    <SoftOpacity />
+  </Suspense>
+  </Tab>
+  <Tab value="Code">
+  ```js
+  export function Page() {
+    return (
+      <div className="bg-[#FAFAFA] relative rounded-lg overflow-hidden">
+        <div className="w-full mx-auto flex flex-col row-span-3">
+          <div className="flex gap-8 w-full h-auto scale-[1.03]">
+            <div className="space-y-8 -translate-y-2">
+              <Image
+                alt="Device"
+                src={'/images/chair1.jpg'}
+                width={200}
+                height={300}
+                unoptimized
+                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+              />
+            </div>
+            <div className="space-y-8 -translate-y-5">
+              <Image
+                alt="Device"
+                src={'/images/shadow.jpg'}
+                width={200}
+                height={300}
+                unoptimized
+                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+              />
+            </div>
+            <div className="space-y-8 -translate-y-6">
+              <Image
+                alt="Device"
+                src={'/images/chair2.jpg'}
+                width={200}
+                height={300}
+                unoptimized
+                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="absolute left-0 right-0 bottom-0 h-[16.75rem] bg-gradient-to-t from-white" />
+      </div>
+    )
+  }
+  ```
+  </Tab>
+</Tabs>
+
+## Soft Opacity
+
+Add the following div to the end of a block you want to add the soft shaddow.
+
+```js
+<div className="absolute left-0 right-0 bottom-0 h-[18.75rem] bg-gradient-to-t from-white" />
+```
